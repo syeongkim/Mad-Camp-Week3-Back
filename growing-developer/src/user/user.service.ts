@@ -1,0 +1,19 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from './user.schema';
+
+@Injectable()
+export class UserService {
+  constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
+
+  async createOrUpdateUser(userData: { username: string; profile: string }): Promise<User> {
+    const user = await this.userModel.findOneAndUpdate(
+      { username: userData.username },
+      { profile: userData.profile },
+      { new: true, upsert: true }
+    );
+
+    return user;
+  }
+}

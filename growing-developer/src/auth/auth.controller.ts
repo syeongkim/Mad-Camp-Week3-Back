@@ -1,11 +1,13 @@
 import { Controller, Get, Query, Res, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { UserService } from '../user/user.service';
 import { access } from 'fs';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
   @Get('github')
@@ -21,10 +23,12 @@ export class AuthController {
       const githubUser = await this.authService.getGitHubUser(accessToken);
       console.log('GitHub User:', githubUser);
 
-      const username = githubUser.login;
-      const githubUrl = githubUser.html_url;
+      const user = await this.userService.createOrUpdateUser({
+        username: githubUser.login,
+        profile: githubUser.avatar_url,
+      });
 
-      res.status(HttpStatus.OK).json({ username: username, githubUrl: githubUrl });
+      res.status(HttpStatus.OK).json(user);
     } catch (e) {
       console.error('Error fetching access token or user data:', e.message);
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Authentication failed');
