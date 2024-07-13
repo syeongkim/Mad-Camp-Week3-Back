@@ -29,6 +29,7 @@ export class AuthController {
       });
 
       res.status(HttpStatus.OK).json(user);
+      res.redirect('http://localhost:3000/myroom'); 
     } catch (e) {
       console.error('Error fetching access token or user data:', e.message);
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Authentication failed');
