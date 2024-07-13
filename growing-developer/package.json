@@ -20,9 +20,23 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/mongoose": "^10.0.10",
+    "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/serve-static": "^4.0.2",
+    "@nestjs/swagger": "^7.4.0",
+    "@types/passport-github2": "^1.2.9",
+    "axios": "^1.7.2",
+    "class-validator": "^0.14.1",
+    "mongoose": "^8.5.1",
+    "oauth": "^0.10.0",
+    "passport": "^0.7.0",
+    "passport-github": "^1.1.0",
+    "passport-github2": "^0.1.12",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },
