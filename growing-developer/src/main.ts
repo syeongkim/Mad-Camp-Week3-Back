@@ -6,10 +6,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Swagger Example')
-    .setDescription('Swagger study API description')
+    .setTitle('Growing Developer')
+    .setDescription('Growing Developer API description')
     .setVersion('1.0.0')
-    .addTag('swagger')
+    // .addTag('swagger')
     .build();
 
   // config를 바탕으로 swagger document 생성
@@ -17,6 +17,6 @@ async function bootstrap() {
   // Swagger UI에 대한 path를 연결함
   // .setup('swagger ui endpoint', app, swagger_document)
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
