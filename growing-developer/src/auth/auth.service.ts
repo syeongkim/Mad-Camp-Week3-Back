@@ -16,7 +16,7 @@ export class AuthService {
   ) {
     this.clientId = this.configService.get<string>('GITHUB_CLIENT_ID');
     this.clientSecret = this.configService.get<string>('GITHUB_CLIENT_SECERT');
-    this.redirectUri = 'http://localhost:3000/auth/github/callback';
+    this.redirectUri = 'http://localhost:3001/auth/github/callback';
   }
 
   getClientId(): string {
