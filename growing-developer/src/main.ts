@@ -4,7 +4,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors({
+    origin: 'http://localhost:3000', // 프론트엔드 URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Growing Developer')

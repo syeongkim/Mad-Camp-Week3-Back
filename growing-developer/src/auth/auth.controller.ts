@@ -28,7 +28,7 @@ export class AuthController {
         profile: githubUser.avatar_url,
       });
 
-      res.status(HttpStatus.OK).json(user);
+      //res.status(HttpStatus.OK).json(user);
       res.redirect('http://localhost:3000/myroom'); 
     } catch (e) {
       console.error('Error fetching access token or user data:', e.message);
