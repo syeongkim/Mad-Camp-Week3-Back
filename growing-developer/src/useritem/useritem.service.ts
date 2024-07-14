@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserItem } from './useritem.schema';
+import { Item } from './item.schema';
 
 @Injectable()
 export class UserItemService {
@@ -18,6 +19,21 @@ export class UserItemService {
 
   async updateUserItems(username: string, items: Partial<UserItem['items']>): Promise<UserItem> {
     return this.userItemModel.findOneAndUpdate({ username }, { items }, { new: true }).exec();
+  }
+
+  async updateUserItem(username: string, itemData: Item): Promise<UserItem> {
+    const userItem = await this.userItemModel.findOne({ username }).exec();
+    if (!userItem) {
+      throw new NotFoundException('User not found');
+    }
+
+    const itemIndex = userItem.items.findIndex(item => item.name === itemData.name);
+    if (itemIndex === -1) {
+      throw new NotFoundException('Item not found');
+    }
+
+    userItem.items[itemIndex] = { ...userItem.items[itemIndex], ...itemData } as Item;
+    return userItem.save();
   }
 
   async getCurrentWearingItems(username: string): Promise<string[]> {
