@@ -12,6 +12,9 @@ export class Record extends Document {
   @Prop({ default: false })
   commits: boolean;
 
+  @Prop({ type: [String], default: [] })
+  wearing_items: string[];
+
   @Prop({ default: "no message" })
   message: string;
 }
