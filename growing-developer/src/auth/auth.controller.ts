@@ -1,8 +1,11 @@
 import { Controller, Get, Query, Res, HttpStatus } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { RecordService } from '../record/record.service';
-import { ConfigService } from '@nestjs/config';
+import { UserItemService } from '../useritem/useritem.service';
+
 import { access } from 'fs';
 
 @Controller('auth')
@@ -11,6 +14,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly recordService: RecordService,
+    private readonly useritemService: UserItemService,
     private readonly configService: ConfigService,
   ) {
 
@@ -37,7 +41,10 @@ export class AuthController {
           username: githubUser.login,
           profile: githubUser.avatar_url,
         });
-        const record = await this.recordService.createRecord({
+        // const record = await this.recordService.createRecord({
+        //   username: githubUser.login,
+        // });
+        const userItem = await this.useritemService.createUserItem({
           username: githubUser.login,
         });
       }

@@ -5,9 +5,10 @@ import { AuthController } from './auth.controller';
 import { HttpModule } from '@nestjs/axios';
 import { UserModule } from '../user/user.module';
 import { RecordModule } from '../record/record.module';
+import { UserItemModule } from 'src/useritem/useritem.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), HttpModule, UserModule, RecordModule],
+  imports: [ConfigModule.forRoot(), HttpModule, UserModule, RecordModule, UserItemModule],
   controllers: [AuthController],
   providers: [AuthService],
   exports: [AuthService],
