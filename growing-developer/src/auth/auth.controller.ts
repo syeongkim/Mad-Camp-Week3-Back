@@ -34,7 +34,9 @@ export class AuthController {
           username: githubUser.login,
           profile: githubUser.avatar_url,
         });
-        // record 초기상태로 추가
+        const record = await this.recordService.createRecord({
+          username: githubUser.login,
+        });
       }
 
       //res.status(HttpStatus.OK).json(user);

@@ -7,8 +7,8 @@ import { Record } from './record.schema';
 export class RecordService {
   constructor(@InjectModel(Record.name) private recordModel: Model<Record>) {}
 
-  async createRecord(record: Record): Promise<Record> {
-    const newRecord = new this.recordModel(record);
+  async createRecord(recordData: Partial<Record>): Promise<Record> {
+    const newRecord = new this.recordModel(recordData);
     return newRecord.save();
   }
 

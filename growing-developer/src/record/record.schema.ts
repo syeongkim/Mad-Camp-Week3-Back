@@ -6,13 +6,13 @@ export class Record extends Document {
   @Prop({ required: true, unique: true })
   username: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: 0 })
   coin: number;
 
   @Prop({ type: [String], default: [] })
   commits: string[];
 
-  @Prop()
+  @Prop({ default: "no message" })
   message: string;
 }
 

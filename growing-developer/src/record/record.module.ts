@@ -8,5 +8,6 @@ import { RecordController } from './record.controller';
   imports: [MongooseModule.forFeature([{ name: Record.name, schema: RecordSchema }])],
   providers: [RecordService],
   controllers: [RecordController],
+  exports: [RecordService],
 })
 export class RecordModule {}

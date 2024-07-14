@@ -7,8 +7,8 @@ export class RecordController {
   constructor(private readonly recordService: RecordService) {}
 
   @Post()
-  async createRecord(@Body() record: Record): Promise<Record> {
-    return this.recordService.createRecord(record);
+  async createRecord(@Body() recordData: Partial<Record>): Promise<Record> {
+    return this.recordService.createRecord(recordData);
   }
 
   @Get()
