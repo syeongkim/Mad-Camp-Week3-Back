@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { RecordService } from './record.service';
 import { Record } from './record.schema';
+import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('records')
 @Controller('records')
 export class RecordController {
   constructor(private readonly recordService: RecordService) {}
@@ -23,6 +25,7 @@ export class RecordController {
   }
 
   @Put(':username')
+  @ApiBody({ type: Record })
   async updateRecord(@Param('username') username: string, @Body() updateData: Partial<Record>): Promise<Record> {
     return this.recordService.updateRecord(username, updateData);
   }

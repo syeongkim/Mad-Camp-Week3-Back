@@ -1,5 +1,6 @@
 import { Controller, Get, Query, Res, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
@@ -8,6 +9,7 @@ import { UserItemService } from '../useritem/useritem.service';
 
 import { access } from 'fs';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
