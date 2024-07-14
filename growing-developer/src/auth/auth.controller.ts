@@ -1,6 +1,7 @@
 import { Controller, Get, Query, Res, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
+import { RecordService } from '../record/record.service';
 import { access } from 'fs';
 
 @Controller('auth')
@@ -8,6 +9,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
+    private readonly recordService: RecordService,
   ) {}
 
   @Get('github')
@@ -23,10 +25,17 @@ export class AuthController {
       const githubUser = await this.authService.getGitHubUser(accessToken);
       console.log('GitHub User:', githubUser);
 
-      const user = await this.userService.createOrUpdateUser({
+      const isExisting = await this.userService.findUserByUserName({ 
         username: githubUser.login,
-        profile: githubUser.avatar_url,
       });
+      
+      if (!isExisting) {
+        const user = await this.userService.createUser({
+          username: githubUser.login,
+          profile: githubUser.avatar_url,
+        });
+        // record 초기상태로 추가
+      }
 
       //res.status(HttpStatus.OK).json(user);
       res.redirect('http://localhost:3000/myroom'); 
