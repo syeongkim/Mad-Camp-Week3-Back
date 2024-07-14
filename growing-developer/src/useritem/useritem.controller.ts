@@ -21,10 +21,17 @@ export class UserItemController {
     return this.userItemService.findUserItemByUsername(username);
   }
 
-  @Put(':username/items')
-  @ApiBody({ type: [Item] })
-  async updateUserItems(@Param('username') username: string, @Body() items: Partial<UserItem['items']>): Promise<UserItem> {
-    return this.userItemService.updateUserItems(username, items);
+  // @Put(':username/items')
+  // @ApiBody({ type: [Item] })
+  // async updateUserItems(@Param('username') username: string, @Body() items: Partial<UserItem['items']>): Promise<UserItem> {
+  //   return this.userItemService.updateUserItems(username, items);
+  // }
+
+  @Post(':username/item')
+  @ApiParam({ name: 'username', required: true })
+  @ApiBody({ type: Item })
+  async addUserItem(@Param('username') username: string, @Body() itemData: Item): Promise<UserItem> {
+    return this.userItemService.addUserItem(username, itemData);
   }
 
   @Put(':username/items/:itemName')
@@ -39,6 +46,8 @@ export class UserItemController {
     itemData.name = itemName;
     return this.userItemService.updateUserItem(username, itemData);
   }
+
+
   // @Get()
   // async getAllUserItems(): Promise<UserItem[]> {
   //   return this.userItemService.getAllUserItems();

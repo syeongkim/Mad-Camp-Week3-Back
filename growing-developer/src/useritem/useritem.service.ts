@@ -17,8 +17,18 @@ export class UserItemService {
     return this.userItemModel.findOne({ username }).exec();
   }
 
-  async updateUserItems(username: string, items: Partial<UserItem['items']>): Promise<UserItem> {
-    return this.userItemModel.findOneAndUpdate({ username }, { items }, { new: true }).exec();
+  // async updateUserItems(username: string, items: Partial<UserItem['items']>): Promise<UserItem> {
+  //   return this.userItemModel.findOneAndUpdate({ username }, { items }, { new: true }).exec();
+  // }
+
+  async addUserItem(username: string, itemData: Item): Promise<UserItem> {
+    const userItem = await this.userItemModel.findOne({ username }).exec();
+    if (!userItem) {
+      throw new NotFoundException('User not found');
+    }
+
+    userItem.items.push(itemData);
+    return userItem.save();
   }
 
   async updateUserItem(username: string, itemData: Item): Promise<UserItem> {
@@ -32,7 +42,15 @@ export class UserItemService {
       throw new NotFoundException('Item not found');
     }
 
-    userItem.items[itemIndex] = { ...userItem.items[itemIndex], ...itemData } as Item;
+    const existingItem = userItem.items[itemIndex];
+    if (itemData.stocks != undefined) {
+      existingItem.stocks = itemData.stocks;
+    }
+    if (itemData.current != undefined) {
+      existingItem.current = itemData.current;
+    }
+
+    userItem.items[itemIndex] = existingItem;
     return userItem.save();
   }
 

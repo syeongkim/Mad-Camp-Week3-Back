@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { RecordModule } from './record/record.module';
 import { UserItemModule } from './useritem/useritem.module';
+import { UserTilModule } from './usertil/usertil.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserItemModule } from './useritem/useritem.module';
     UserModule,
     RecordModule,
     UserItemModule,
+    UserTilModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService],

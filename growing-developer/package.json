@@ -35,6 +35,7 @@
     "ghrepos": "^2.1.0",
     "moment": "^2.30.1",
     "mongoose": "^8.5.1",
+    "mongoose-sequence": "^6.0.1",
     "oauth": "^0.10.0",
     "passport": "^0.7.0",
     "passport-github": "^1.1.0",

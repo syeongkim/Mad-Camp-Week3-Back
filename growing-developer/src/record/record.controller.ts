@@ -20,7 +20,8 @@ export class RecordController {
 
   @Get(':username')
   async getRecordByUsername(@Param('username') username: string): Promise<Record> {
-    await this.recordService.updateHasCommit(username);
+    // await this.recordService.updateHasCommit(username);
+    await this.recordService.updateWearingItems(username);
     return this.recordService.getRecordByUsername(username);
   }
 
