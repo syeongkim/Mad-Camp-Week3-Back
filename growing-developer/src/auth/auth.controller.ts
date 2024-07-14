@@ -49,12 +49,7 @@ export class AuthController {
         });
       }
 
-      const authOptions = {
-        headers: {
-          Authorization: `token ${devaccesstoken}`,
-        },
-      };
-      await this.recordService.updateHasCommit(githubUser.login, authOptions);
+      await this.recordService.updateHasCommit(githubUser.login);
 
       //res.status(HttpStatus.OK).json(user);
       res.redirect('http://localhost:3000/myroom'); 

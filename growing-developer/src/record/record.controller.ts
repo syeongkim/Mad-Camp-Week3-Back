@@ -11,13 +11,14 @@ export class RecordController {
     return this.recordService.createRecord(recordData);
   }
 
-  @Get()
-  async getRecords(): Promise<Record[]> {
-    return this.recordService.getRecords();
-  }
+  // @Get()
+  // async getRecords(): Promise<Record[]> {
+  //   return this.recordService.getRecords();
+  // }
 
   @Get(':username')
   async getRecordByUsername(@Param('username') username: string): Promise<Record> {
+    await this.recordService.updateHasCommit(username);
     return this.recordService.getRecordByUsername(username);
   }
 

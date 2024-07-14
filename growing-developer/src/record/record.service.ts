@@ -3,6 +3,7 @@ import * as ghrepos from 'ghrepos';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ConfigService } from '@nestjs/config';
 
 import { Record } from './record.schema';
 import { UserItemService } from '../useritem/useritem.service';
@@ -10,17 +11,29 @@ import { UserItemService } from '../useritem/useritem.service';
 
 @Injectable()
 export class RecordService {
+
+  private readonly devAccessToken: string;
+
   constructor(
     @InjectModel(Record.name) private recordModel: Model<Record>,
     private readonly userItemService: UserItemService,
-  ) { }
+    private readonly configService: ConfigService,
+  ) {
+    this.devAccessToken = this.configService.get<string>('GITHUB_ACCESS_TOKEN');
+  }
 
   async createRecord(recordData: Partial<Record>): Promise<Record> {
     const newRecord = new this.recordModel(recordData);
     return newRecord.save();
   }
 
-  async updateHasCommit(username: string, authOptions: any): Promise<void> {
+  async updateHasCommit(username: string): Promise<void> {
+    const authOptions = {
+      headers: {
+        Authorization: `Bearer ${this.devAccessToken}`,
+      },
+    };
+
     const today = moment().startOf('day');
     let hasCommitToday = false;
 
@@ -68,6 +81,7 @@ export class RecordService {
   async getRecords(): Promise<Record[]> {
     const records = await this.recordModel.find().exec();
     for (const record of records) {
+      await this.updateHasCommit(record.username);
       await this.updateWearingItems(record.username);
     }
     return this.recordModel.find().exec(); // 업데이트 후 다시 조회
