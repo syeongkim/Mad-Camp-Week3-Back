@@ -35,7 +35,6 @@ export class UserTilService {
     }
 
     const existingTil = userTil.til[tilIndex];
-    existingTil.date = tilData.date;
     if (tilData.contents != undefined) {
       existingTil.contents = tilData.contents;
     }

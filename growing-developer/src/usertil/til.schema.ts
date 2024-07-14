@@ -12,10 +12,6 @@ export class Til extends Document {
   @Prop({ unique: true })
   id: number;
 
-  @ApiProperty({ description: 'Date of TIL', example: '2024-07-14 ..' })
-  @Prop({ default: Date.now })
-  date: string;
-
   @ApiProperty({ description: 'Contents of TIL', example: '오늘은 react와 node 버전을 맞췄다.' })
   @Prop({ required: true })
   contents: string;
@@ -27,11 +23,6 @@ export class Til extends Document {
 
 export const TilSchema = SchemaFactory.createForClass(Til);
 
-TilSchema.plugin(AutoIncrement, { inc_field: 'id' });
+TilSchema.set('timestamps', { createdAt: true, updatedAt: true });
 
-TilSchema.pre('save', function(next) {
-  if (!this.date) {
-    this.date = new Date().toISOString();
-  }
-  next();
-});
+// TilSchema.plugin(AutoIncrement, { inc_field: 'id' });
