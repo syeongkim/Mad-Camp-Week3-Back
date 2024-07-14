@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthController } from './auth/auth.controller';
@@ -9,6 +10,9 @@ import { RecordModule } from './record/record.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // 전역 모듈로 설정하여 모든 모듈에서 사용할 수 있게 합니다.
+    }),
     MongooseModule.forRoot("mongodb://localhost:27017/growingDeveloper"),
     AuthModule,
     UserModule,

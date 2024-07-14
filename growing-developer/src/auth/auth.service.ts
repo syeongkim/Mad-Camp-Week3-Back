@@ -8,6 +8,7 @@ import { lastValueFrom } from 'rxjs';
 export class AuthService {
   private readonly clientId: string;
   private readonly clientSecret: string;
+  private readonly accesstoken: string;
   private readonly redirectUri: string;
 
   constructor(
@@ -16,6 +17,7 @@ export class AuthService {
   ) {
     this.clientId = this.configService.get<string>('GITHUB_CLIENT_ID');
     this.clientSecret = this.configService.get<string>('GITHUB_CLIENT_SECERT');
+    this.accesstoken = this.configService.get<string>('GITHUB_ACCESS_TOKEN');
     this.redirectUri = 'http://localhost:3001/auth/github/callback';
   }
 

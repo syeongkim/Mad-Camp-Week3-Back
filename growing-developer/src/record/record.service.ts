@@ -14,7 +14,7 @@ export class RecordService {
     return newRecord.save();
   }
 
-  async updateCommits(username: string, authOptions: any): Promise<void> {
+  async updateHasCommit(username: string, authOptions: any): Promise<void> {
     const today = moment().startOf('day');
     let hasCommitToday = false;
 
@@ -51,7 +51,7 @@ export class RecordService {
       });
     });
 
-    await this.recordModel.findOneAndUpdate({ username }, { commits: hasCommitToday }, { new: true }).exec();
+    await this.recordModel.findOneAndUpdate({ username }, { hasCommit: hasCommitToday }, { new: true }).exec();
   }
     
   async getRecords(): Promise < Record[] > {

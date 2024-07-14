@@ -10,7 +10,7 @@ export class Record extends Document {
   coin: number;
 
   @Prop({ default: false })
-  commits: boolean;
+  hasCommit: boolean;
 
   @Prop({ type: [String], default: [] })
   wearing_items: string[];
