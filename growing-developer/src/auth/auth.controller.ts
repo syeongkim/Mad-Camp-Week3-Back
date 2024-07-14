@@ -23,8 +23,6 @@ export class AuthController {
     try {
       const accessToken = await this.authService.getGitHubAccessToken(code);
       const githubUser = await this.authService.getGitHubUser(accessToken);
-      console.log('GitHub User:', githubUser);
-
       const isExisting = await this.userService.findUserByUserName({ 
         username: githubUser.login,
       });
@@ -38,6 +36,13 @@ export class AuthController {
           username: githubUser.login,
         });
       }
+
+      const authOptions = {
+        headers: {
+          Authorization: `token ${accessToken}`,
+        },
+      };
+      await this.recordService.updateCommits(githubUser.login, authOptions);
 
       //res.status(HttpStatus.OK).json(user);
       res.redirect('http://localhost:3000/myroom'); 

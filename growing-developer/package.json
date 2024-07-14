@@ -32,6 +32,8 @@
     "@types/passport-github2": "^1.2.9",
     "axios": "^1.7.2",
     "class-validator": "^0.14.1",
+    "ghrepos": "^2.1.0",
+    "moment": "^2.30.1",
     "mongoose": "^8.5.1",
     "oauth": "^0.10.0",
     "passport": "^0.7.0",

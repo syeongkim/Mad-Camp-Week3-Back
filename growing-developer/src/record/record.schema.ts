@@ -9,8 +9,8 @@ export class Record extends Document {
   @Prop({ required: true, default: 0 })
   coin: number;
 
-  @Prop({ type: [String], default: [] })
-  commits: string[];
+  @Prop({ default: false })
+  commits: boolean;
 
   @Prop({ default: "no message" })
   message: string;
