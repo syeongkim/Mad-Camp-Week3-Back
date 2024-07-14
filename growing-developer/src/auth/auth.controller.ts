@@ -29,7 +29,7 @@ export class AuthController {
   @Get('github/callback')
   async githubAuthCallback(@Query('code') code: string, @Res() res) {
     try {
-      const accessToken = await this.authService.getGitHubAccessToken(code);
+      // const accessToken = await this.authService.getGitHubAccessToken(code);
       const devaccesstoken = this.configService.get<string>('GITHUB_ACCESS_TOKEN');
       const githubUser = await this.authService.getGitHubUser(devaccesstoken);
       const isExisting = await this.userService.findUserByUserName({ 
@@ -41,9 +41,9 @@ export class AuthController {
           username: githubUser.login,
           profile: githubUser.avatar_url,
         });
-        // const record = await this.recordService.createRecord({
-        //   username: githubUser.login,
-        // });
+        const record = await this.recordService.createRecord({
+          username: githubUser.login,
+        });
         const userItem = await this.useritemService.createUserItem({
           username: githubUser.login,
         });

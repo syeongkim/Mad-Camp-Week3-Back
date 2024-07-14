@@ -20,6 +20,14 @@ export class UserItemService {
     return this.userItemModel.findOneAndUpdate({ username }, { items }, { new: true }).exec();
   }
 
+  async getCurrentWearingItems(username: string): Promise<string[]> {
+    const userItem = await this.userItemModel.findOne({ username }).exec();
+    if (!userItem) {
+      return [];
+    }
+    return userItem.items.filter(item => item.current).map(item => item.name);
+  }
+  
   async getAllUserItems(): Promise<UserItem[]> {
     return this.userItemModel.find().exec();
   }
