@@ -58,7 +58,7 @@ export class RecordService {
         const commits: AxiosResponse = await lastValueFrom(
           this.httpService.get(`https://api.github.com/repos/${username}/${repo.name}/commits`, {
             headers: {
-              Authorization: `token ${accessToken}}`,
+              Authorization: `token ${accessToken}`,
               'X-GitHub-Api-Version': '2022-11-28',
             },
           }),
