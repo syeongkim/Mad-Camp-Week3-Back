@@ -44,7 +44,7 @@ export class UserTilController {
   @Delete(':username/til/:id')
   @ApiParam({ name: 'username', required: true })
   @ApiParam({ name: 'id', required: true })
-  async deleteTil(@Param('username') username: string, @Param('id') id: number): Promise<UserTil> {
+  async deleteTil(@Param('username') username: string, @Param('id') id: string): Promise<UserTil> {
     return this.userTilService.deleteTil(username, id);
   }
 }

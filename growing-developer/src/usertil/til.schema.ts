@@ -8,9 +8,9 @@ const AutoIncrement = AutoIncrementFactory(mongoose);
 
 @Schema()
 export class Til extends Document {
-  @ApiProperty({ description: 'TIL ID', example: 0 })
-  @Prop({ unique: true })
-  id: number;
+  // @ApiProperty({ description: 'TIL ID', example: 0 })
+  // @Prop({ unique: true })
+  // id: number;
 
   @ApiProperty({ description: 'Contents of TIL', example: '오늘은 react와 node 버전을 맞췄다.' })
   @Prop({ required: true })

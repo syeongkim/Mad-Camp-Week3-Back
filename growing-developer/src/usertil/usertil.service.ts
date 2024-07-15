@@ -45,9 +45,9 @@ export class UserTilService {
     return userTil.save();
   }
 
-  async deleteTil(username: string, tilId: number): Promise<UserTil> {
+  async deleteTil(username: string, tilId: string): Promise<UserTil> {
     const userTil = await this.findUserTilByUsername(username);
-    const tilIndex = userTil.til.findIndex(t => t.id == tilId);
+    const tilIndex = userTil.til.findIndex(t => t._id.toString() === tilId);
     if (tilIndex === -1) {
       throw new NotFoundException('TIL not found');
     }

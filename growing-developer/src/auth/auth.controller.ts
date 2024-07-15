@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { RecordService } from '../record/record.service';
 import { UserItemService } from '../useritem/useritem.service';
+import { UserTilService } from '../usertil/usertil.service';
 // import { UserPostService } from '..userpost/userpost.service';
 
 import { access } from 'fs';
@@ -18,6 +19,7 @@ export class AuthController {
     private readonly userService: UserService,
     private readonly recordService: RecordService,
     private readonly useritemService: UserItemService,
+    private readonly userTilService: UserTilService,
     private readonly configService: ConfigService,
     // private readonly userPostService: UserPostService,
   ) {
@@ -53,6 +55,7 @@ export class AuthController {
         const userItem = await this.useritemService.createUserItem({
           username: githubUser['login'],
         });
+        const userTil = await this.userTilService.createUserTil(githubUser['login']);
       }
 
       try {
