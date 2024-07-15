@@ -12,7 +12,7 @@ export class Post extends Document {
   @Prop({ required: true })
   contents: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: false })
   read: boolean;
 }
 
