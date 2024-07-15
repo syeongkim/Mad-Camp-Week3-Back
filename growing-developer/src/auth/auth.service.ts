@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
@@ -56,18 +56,25 @@ export class AuthService {
     return response.data.access_token;
   }
 
-  async getGitHubUser(accessToken: string): Promise<any> {
-    const response: AxiosResponse = await lastValueFrom(
-      this.httpService.get(
-        'https://api.github.com/user',
-        {
+  async getGitHubUser(accessToken: string): Promise<AxiosResponse> {
+    try {
+      const response: AxiosResponse = await lastValueFrom(
+        this.httpService.get('https://api.github.com/user', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
+            'X-GitHub-Api-Version': '2022-11-28',
           },
-        },
-      ),
-    );
-
-    return response.data;
+        }),
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        console.error(`Error from GitHub: ${error.response.data.message}`);
+        throw new HttpException(`Error from GitHub: ${error.response.data.message}`, error.response.status);
+      } else {
+        console.error('Error fetching access token or user data in service:', error);
+        throw new HttpException('Error fetching access token or user data', 500);
+      }
+    }
   }
 }

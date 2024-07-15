@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { RecordModule } from './record/record.module';
 import { UserItemModule } from './useritem/useritem.module';
 import { UserTilModule } from './usertil/usertil.module';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UserTilModule } from './usertil/usertil.module';
     RecordModule,
     UserItemModule,
     UserTilModule,
+    PostModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService],

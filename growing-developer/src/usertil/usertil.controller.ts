@@ -39,7 +39,7 @@ export class UserTilController {
   ): Promise<UserTil> {
     return this.userTilService.updateTil(username, id, tilData);
   }
-
+  
   @Delete(':username/til/:id')
   @ApiParam({ name: 'username', required: true })
   @ApiParam({ name: 'id', required: true })
