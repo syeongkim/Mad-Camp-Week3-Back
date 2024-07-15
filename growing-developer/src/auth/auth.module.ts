@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef  } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -8,7 +8,7 @@ import { RecordModule } from '../record/record.module';
 import { UserItemModule } from 'src/useritem/useritem.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), HttpModule, UserModule, RecordModule, UserItemModule],
+  imports: [ConfigModule.forRoot(), HttpModule, UserModule, forwardRef(() => RecordModule), UserItemModule],
   controllers: [AuthController],
   providers: [AuthService],
   exports: [AuthService],

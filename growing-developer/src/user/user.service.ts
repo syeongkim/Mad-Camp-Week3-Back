@@ -12,7 +12,7 @@ export class UserService {
     return user;
   }
 
-  async createUser(userData: { username: string; profile: string }): Promise<User> {
+  async createUser(userData: { username: string; profile: string, access_token: string }): Promise<User> {
     const newUser = new this.userModel(userData);
     return newUser.save();
   }

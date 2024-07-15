@@ -61,7 +61,7 @@ export class AuthService {
       const response: AxiosResponse = await lastValueFrom(
         this.httpService.get('https://api.github.com/user', {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `token ${accessToken}`,
             'X-GitHub-Api-Version': '2022-11-28',
           },
         }),

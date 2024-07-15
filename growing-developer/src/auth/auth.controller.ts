@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { RecordService } from '../record/record.service';
 import { UserItemService } from '../useritem/useritem.service';
+// import { UserPostService } from '..userpost/userpost.service';
 
 import { access } from 'fs';
 
@@ -18,6 +19,7 @@ export class AuthController {
     private readonly recordService: RecordService,
     private readonly useritemService: UserItemService,
     private readonly configService: ConfigService,
+    // private readonly userPostService: UserPostService,
   ) {
 
   }
@@ -31,10 +33,10 @@ export class AuthController {
   @Get('github/callback')
   async githubAuthCallback(@Query('code') code: string, @Res() res) {
     try {
-      // const accessToken = await this.authService.getGitHubAccessToken(code);
-      const devaccesstoken = this.configService.get<string>('GITHUB_ACCESS_TOKEN');
-      const githubUser = await this.authService.getGitHubUser(devaccesstoken);
-      console.log(githubUser);
+      const accessToken = await this.authService.getGitHubAccessToken(code);
+      // const devaccesstoken = this.configService.get<string>('GITHUB_ACCESS_TOKEN');
+      const githubUser = await this.authService.getGitHubUser(accessToken);
+      console.log("***:", githubUser);
       const isExisting = await this.userService.findUserByUserName({ 
         username: githubUser['login'],
       });
@@ -43,6 +45,7 @@ export class AuthController {
         const user = await this.userService.createUser({
           username: githubUser['login'],
           profile: githubUser['avatar_url'],
+          access_token: accessToken,
         });
         const record = await this.recordService.createRecord({
           username: githubUser['login'],
@@ -50,9 +53,17 @@ export class AuthController {
         const userItem = await this.useritemService.createUserItem({
           username: githubUser['login'],
         });
+        // const userPost = await this.userPostService.createUserPost({
+        //   username: githubUser['login'],
+        // });
       }
 
-      await this.recordService.updateHasCommit(githubUser['login']);
+      try {
+        await this.recordService.updateHasCommit(githubUser['login']);
+      } catch (e) {
+        console.error('Error updating hasCommit in controller:', e.message);
+      }
+      
 
       res.status(HttpStatus.OK).json({'username': githubUser['login'], 'loggedIn': true});
       //res.redirect(`http://localhost:3000/myroom/${githubUser['login']}`); 
