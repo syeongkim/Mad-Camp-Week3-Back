@@ -14,7 +14,7 @@ async function bootstrap() {
     .setTitle('Growing Developer')
     .setDescription('Growing Developer API description')
     .setVersion('1.0.0')
-    // .addTag('swagger')
+    .addTag('swagger')
     .build();
 
   // config를 바탕으로 swagger document 생성

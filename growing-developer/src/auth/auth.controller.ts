@@ -53,9 +53,6 @@ export class AuthController {
         const userItem = await this.useritemService.createUserItem({
           username: githubUser['login'],
         });
-        // const userPost = await this.userPostService.createUserPost({
-        //   username: githubUser['login'],
-        // });
       }
 
       try {
