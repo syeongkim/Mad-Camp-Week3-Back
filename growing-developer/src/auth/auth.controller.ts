@@ -52,7 +52,7 @@ export class AuthController {
         });
       }
 
-      // await this.recordService.updateHasCommit(githubUser['login']);
+      await this.recordService.updateHasCommit(githubUser['login']);
 
       //res.status(HttpStatus.OK).json(user);
       res.redirect('http://localhost:3000/myroom'); 

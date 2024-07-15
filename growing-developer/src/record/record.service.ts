@@ -7,6 +7,9 @@ import { ConfigService } from '@nestjs/config';
 
 import { Record } from './record.schema';
 import { UserItemService } from '../useritem/useritem.service';
+import { Axios, AxiosResponse } from 'axios';
+import { lastValueFrom } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
 
 
 @Injectable()
@@ -18,6 +21,7 @@ export class RecordService {
     @InjectModel(Record.name) private recordModel: Model<Record>,
     private readonly userItemService: UserItemService,
     private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
   ) {
     this.devAccessToken = this.configService.get<string>('GITHUB_ACCESS_TOKEN');
   }
@@ -37,38 +41,36 @@ export class RecordService {
     const today = moment().startOf('day');
     let hasCommitToday = false;
 
-    await new Promise((resolve, reject) => {
-      ghrepos.listUser(authOptions, username, (err, repolist) => {
-        if (err) {
-          return reject(err);
+    const repos: AxiosResponse = await lastValueFrom(
+      this.httpService.get(`https://api.github.com/users/${username}/repos`, {
+        headers: {
+          Authorization: `Bearer ${this.devAccessToken}`,
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      })
+    )
+
+    for (const repo of repos.data) {
+      const commits: AxiosResponse = await lastValueFrom(
+        this.httpService.get(`https://api.github.com/repos/${username}/${repo.name}/commits`, {
+          headers: {
+            Authorization: `Bearer ${this.devAccessToken}`,
+            'X-GitHub-Api-Version': '2022-11-28',
+          },
+        }),
+      );
+
+      for (const commit of commits.data) {
+        const commitDate = moment(commit.commit.author.date);
+        if (commitDate.isSame(today, 'day')) {
+          hasCommitToday = true;
+          break;
         }
-        let processedRepos = 0;
-
-        repolist.forEach((repo) => {
-          ghrepos.listCommits(authOptions, username, repo.name, (err, refData) => {
-            if (err) {
-              return reject(err);
-            }
-
-            refData.forEach((ref) => {
-              const commitDate = moment(ref.commit.author.date);
-              if (commitDate.isSame(today, 'day')) {
-                hasCommitToday = true;
-              }
-            });
-
-            processedRepos++;
-            if (processedRepos === repolist.length) {
-              resolve(null);
-            }
-          });
-        });
-
-        if (repolist.length === 0) {
-          resolve(null);
-        }
-      });
-    });
+      }
+      if (hasCommitToday) {
+        break;
+      }
+    }
 
     await this.recordModel.findOneAndUpdate({ username }, { hasCommit: hasCommitToday }, { new: true }).exec();
   }
@@ -78,14 +80,14 @@ export class RecordService {
     await this.recordModel.findOneAndUpdate({ username }, { wearing_items: currentWearingItems }, { new: true }).exec();
   }
 
-  async getRecords(): Promise<Record[]> {
-    const records = await this.recordModel.find().exec();
-    for (const record of records) {
-      await this.updateHasCommit(record.username);
-      await this.updateWearingItems(record.username);
-    }
-    return this.recordModel.find().exec(); // 업데이트 후 다시 조회
-  }
+  // async getRecords(): Promise<Record[]> {
+  //   const records = await this.recordModel.find().exec();
+  //   for (const record of records) {
+  //     await this.updateHasCommit(record.username);
+  //     await this.updateWearingItems(record.username);
+  //   }
+  //   return this.recordModel.find().exec(); // 업데이트 후 다시 조회
+  // }
 
   async getRecordByUsername(username: string): Promise<Record> {
     await this.updateWearingItems(username);

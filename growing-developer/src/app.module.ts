@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthController } from './auth/auth.controller';
@@ -23,6 +24,7 @@ import { PostModule } from './post/post.module';
     UserItemModule,
     UserTilModule,
     PostModule,
+    HttpModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService],
