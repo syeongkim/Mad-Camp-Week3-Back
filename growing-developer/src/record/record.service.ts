@@ -27,7 +27,7 @@ export class RecordService {
     private readonly httpService: HttpService,
     private readonly authService: AuthService,
   ) {
-    // this.devAccessToken = this.configService.get<string>('GITHUB_ACCESS_TOKEN');
+    this.devAccessToken = this.configService.get<string>('GITHUB_ACCESS_TOKEN');
   }
 
   async createRecord(recordData: Partial<Record>): Promise<Record> {
@@ -45,26 +45,29 @@ export class RecordService {
     let hasCommitToday = false;
 
     try {
+      console.log("1")
       const repos: AxiosResponse = await lastValueFrom(
         this.httpService.get(`https://api.github.com/users/${username}/repos`, {
           headers: {
-            Authorization: `token ${accessToken}`,
+            Authorization: `Bearer ${this.devAccessToken}`,
             'X-GitHub-Api-Version': '2022-11-28',
           },
         })
       )
   
       for (const repo of repos.data) {
+        console.log(2)
         const commits: AxiosResponse = await lastValueFrom(
           this.httpService.get(`https://api.github.com/repos/${username}/${repo.name}/commits`, {
             headers: {
-              Authorization: `token ${accessToken}`,
+              Authorization: `Bearer ${this.devAccessToken}`,
               'X-GitHub-Api-Version': '2022-11-28',
             },
           }),
         );
   
         for (const commit of commits.data) {
+          console.log(3)
           const commitDate = moment(commit.commit.author.date);
           if (commitDate.isSame(today, 'day')) {
             console.log("commit today!");
