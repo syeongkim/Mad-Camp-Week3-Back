@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common'
 import { UserTilService } from './usertil.service';
 import { UserTil } from './usertil.schema';
 import { Til } from './til.schema';
-import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('usertils')
 @Controller('usertils')
@@ -17,6 +17,7 @@ export class UserTilController {
 
   @Get(':username')
   @ApiParam({ name: 'username', required: true })
+  @ApiResponse({ status: 200, type: UserTil })
   async findUserTilByUsername(@Param('username') username: string): Promise<UserTil> {
     return this.userTilService.findUserTilByUsername(username);
   }
