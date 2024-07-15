@@ -55,7 +55,7 @@ export class AuthController {
       await this.recordService.updateHasCommit(githubUser['login']);
 
       //res.status(HttpStatus.OK).json(user);
-      res.redirect('http://localhost:3000/myroom'); 
+      res.redirect(`http://localhost:3000/myroom/${githubUser['login']}`); 
     } catch (e) {
       console.error('Error fetching access token or user data in controller:', e.message);
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Authentication failed');
