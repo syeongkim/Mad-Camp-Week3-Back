@@ -20,7 +20,9 @@ export class UserTilService {
   }
 
   async findUserTilByUsername(username: string): Promise<UserTil> {
-    const userTil = await this.userTilModel.findOne({ username }).exec();
+    const userTil = await this.userTilModel.findOne({ username })
+    // const tilList = userTil.til.sort((a, b) => b['createdAt'].getTime() - a['createdAt'].getTime());
+    // userTil.til = tilList;
     if (!userTil) {
       throw new NotFoundException('User TIL not found');
     }
@@ -29,7 +31,7 @@ export class UserTilService {
 
   async addTil(username: string, tilData: Til): Promise<UserTil> {
     const userTil = await this.findUserTilByUsername(username);
-    userTil.til.push(tilData);
+    userTil.til.unshift(tilData);
     return userTil.save();
   }
 
