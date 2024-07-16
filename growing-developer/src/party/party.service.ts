@@ -8,19 +8,19 @@ export class PartyService {
   constructor(
     private readonly recordsService: RecordService,
     private readonly postsService: PostService,
-    private readonly usertilsService: UserTilService,
+    private readonly usertilService: UserTilService,
   ) {}
 
-  async getCommitKingOfMonth() {
-    return this.recordsService.getTopCommitterOfMonth();
+  async getTopCommitterOfWeek() {
+    return this.recordsService.getTopCommitterOfWeek();
   }
 
-  async getCommunicationKingOfMonth() {
-    return this.postsService.getTopSenderOfMonth();
+  async getCommunicationKingOfWeek(): Promise<{ username: string, count: number } | null> {
+    return this.postsService.getTopSenderOfWeek();
   }
+  
 
-//   async getConsistentTilOfWeek() {
-//     // 로직 구현
-//     return this.usertilsService.getConsistentTilUsers();
-//   }
+  async getConsistentTilOfDays(days: number): Promise<string[]> {
+    return this.usertilService.getConsistentTilUsers(days);
+  }
 }

@@ -22,16 +22,14 @@ export class PostService {
     return this.postModel.find({ sender: username }).exec();
   }
 
-  async getTopSenderOfMonth(): Promise<string> {
-    const startOfLastMonth = moment().subtract(1, 'month').startOf('month').toDate();
-    const endOfLastMonth = moment().subtract(1, 'month').endOf('month').toDate();
-
-    const temp = this.postModel.find({ createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth } })
-    console.log(temp);
+  async getTopSenderOfWeek(): Promise<{ username: string, count: number } | null> {
+    const startOfLastWeek = moment().subtract(1, 'week').startOf('week').toDate();
+    const endOfLastWeek = moment().subtract(1, 'week').endOf('week').toDate();
+  
     const result = await this.postModel.aggregate([
       {
         $match: {
-          createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth },
+          createdAt: { $gte: startOfLastWeek, $lte: endOfLastWeek },
         },
       },
       {
@@ -47,8 +45,8 @@ export class PostService {
         $limit: 1,
       },
     ]);
-
+  
     console.log(result);
-    return result.length > 0 ? result[0]._id : null;
+    return result.length > 0 ? { username: result[0]._id, count: result[0].count } : null;
   }
 }

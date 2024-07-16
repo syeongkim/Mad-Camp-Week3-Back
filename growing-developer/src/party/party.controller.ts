@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { PartyService } from './party.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -9,16 +9,16 @@ export class PartyController {
 
   @Get('commitking')
   async getCommitKing() {
-    return this.partyService.getCommitKingOfMonth();
+    return this.partyService.getTopCommitterOfWeek();
   }
 
   @Get('communicationking')
-  async getCommunicationKing() {
-    return this.partyService.getCommunicationKingOfMonth();
+  async getCommunicationKing(): Promise<{ username: string, count: number } | null> {
+    return this.partyService.getCommunicationKingOfWeek();
   }
 
-//   @Get('consistenttil')
-//   async getConsistentTil() {
-//     return this.partyService.getConsistentTilOfWeek();
-//   }
+  @Get('consistenttil:days')
+  async getConsistentTil(@Param('days') days: number): Promise<string[]> {
+    return this.partyService.getConsistentTilOfDays(Number(days));
+  }
 }

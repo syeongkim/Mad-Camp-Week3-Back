@@ -42,8 +42,8 @@ export class RecordService {
     const accessToken = user?.access_token;
 
     const today = moment().startOf('day');
-    const startOfLastMonth = moment().subtract(1, 'month').startOf('month');
-    const endOfLastMonth = moment().subtract(1, 'month').endOf('month');
+    const startOfLastWeek = moment().subtract(1, 'week').startOf('week');
+    const endOfLastWeek = moment().subtract(1, 'week').endOf('week');
     let hasCommitToday = false;
     let commitCount = 0;
 
@@ -74,7 +74,7 @@ export class RecordService {
             hasCommitToday = true;
             break;
           }
-          if (commitDate.isBetween(startOfLastMonth, endOfLastMonth, null, '[]')) {
+          if (commitDate.isBetween(startOfLastWeek, endOfLastWeek, null, '[]')) {
             commitCount++;
           }
         }
@@ -117,12 +117,12 @@ export class RecordService {
     return this.recordModel.findOneAndDelete({ username }).exec();
   }
 
-  async getTopCommitterOfMonth(): Promise<string> {
+  async getTopCommitterOfWeek(): Promise<Record> {
     const topCommitter = await this.recordModel
       .findOne()
       .sort({ commitCount: -1 })
       .exec();
 
-    return topCommitter ? topCommitter.username : null;
+    return topCommitter ? topCommitter : null;
   }
 }
