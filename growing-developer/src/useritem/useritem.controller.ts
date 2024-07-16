@@ -34,18 +34,24 @@ export class UserItemController {
     return this.userItemService.addUserItem(username, itemData);
   }
 
-  // @Put(':username/items/:itemName')
-  // @ApiParam({ name: 'username', required: true })
-  // @ApiParam({ name: 'itemName', required: true })
-  // @ApiBody({ type: Item })
-  // async updateUserItem(
-  //   @Param('username') username: string,
-  //   @Param('itemName') itemName: string,
-  //   @Body() itemData: Item,
-  // ): Promise<UserItem> {
-  //   itemData.name = itemName;
-  //   return this.userItemService.updateUserItem(username, itemData);
-  // }
+  @Post('sendgift')
+  @ApiBody({ schema: { properties: { senderUsername: { type: 'string' }, receiverUsername: { type: 'string' }, itemName: { type: 'string' } } } })
+  async sendGift(@Body() body: { senderUsername: string, receiverUsername: string, itemName: string }): Promise<{ sender: UserItem, receiver: UserItem }> {
+    return this.userItemService.sendGift(body.senderUsername, body.receiverUsername, body.itemName);
+  }
+
+  @Put(':username/items/:itemName')
+  @ApiParam({ name: 'username', required: true })
+  @ApiParam({ name: 'itemName', required: true })
+  @ApiBody({ type: Item })
+  async updateUserItem(
+    @Param('username') username: string,
+    @Param('itemName') itemName: string,
+    @Body() itemData: Item,
+  ): Promise<UserItem> {
+    itemData.name = itemName;
+    return this.userItemService.updateUserItem(username, itemData);
+  }
 
 
   // @Get()
