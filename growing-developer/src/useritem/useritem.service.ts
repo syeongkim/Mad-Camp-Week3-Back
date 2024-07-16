@@ -44,7 +44,7 @@ export class UserItemService {
 
     const existingItem = userItem.items[itemIndex];
     if (itemData.stocks != undefined) {
-      existingItem.stocks = itemData.stocks;
+      existingItem.stocks += itemData.stocks;
     }
     if (itemData.current != undefined) {
       existingItem.current = itemData.current;
