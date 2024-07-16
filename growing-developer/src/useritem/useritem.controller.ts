@@ -34,18 +34,18 @@ export class UserItemController {
     return this.userItemService.addUserItem(username, itemData);
   }
 
-  @Put(':username/items/:itemName')
-  @ApiParam({ name: 'username', required: true })
-  @ApiParam({ name: 'itemName', required: true })
-  @ApiBody({ type: Item })
-  async updateUserItem(
-    @Param('username') username: string,
-    @Param('itemName') itemName: string,
-    @Body() itemData: Item,
-  ): Promise<UserItem> {
-    itemData.name = itemName;
-    return this.userItemService.updateUserItem(username, itemData);
-  }
+  // @Put(':username/items/:itemName')
+  // @ApiParam({ name: 'username', required: true })
+  // @ApiParam({ name: 'itemName', required: true })
+  // @ApiBody({ type: Item })
+  // async updateUserItem(
+  //   @Param('username') username: string,
+  //   @Param('itemName') itemName: string,
+  //   @Body() itemData: Item,
+  // ): Promise<UserItem> {
+  //   itemData.name = itemName;
+  //   return this.userItemService.updateUserItem(username, itemData);
+  // }
 
 
   // @Get()
