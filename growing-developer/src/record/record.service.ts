@@ -113,26 +113,13 @@ export class RecordService {
     return this.recordModel.findOneAndUpdate({ username }, updateData, { new: true }).exec();
   }
 
-  async incrementCoin(username: string, amount: number): Promise<Record> {
+  async updateCoin(username: string, amount: number): Promise<Record> {
     const record = await this.recordModel.findOne({ username }).exec();
     if (!record) {
       throw new NotFoundException('User record not found');
     }
     record.coin += amount;
-    record.save();
-    console.log(record);
-    return record;
-  }
-
-  async decrementCoin(username: string, amount: number): Promise<Record> {
-    const record = await this.recordModel.findOne({ username }).exec();
-    if (!record) {
-      throw new NotFoundException('User record not found');
-    }
-    record.coin -= amount;
-    record.save();
-    console.log(record);
-    return record;
+    return record.save();
   }
 
   async deleteRecord(username: string): Promise<Record> {
