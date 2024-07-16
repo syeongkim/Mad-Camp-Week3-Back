@@ -9,9 +9,14 @@ import * as moment from 'moment';
 export class UserTilService {
   constructor(@InjectModel(UserTil.name) private readonly userTilModel: Model<UserTil>) {}
 
-  async createUserTil(username: string): Promise<UserTil> {
-    const newUserTil = new this.userTilModel({ username, til: [] });
-    return newUserTil.save();
+  // async createUserTil(username: string): Promise<UserTil> {
+  //   const newUserTil = new this.userTilModel({ username, til: [] });
+  //   return newUserTil.save();
+  // }
+
+  async createUserTil(userTilData: Partial<UserTil>): Promise<UserTil> {
+    const newUserItem = new this.userTilModel(userTilData);
+    return newUserItem.save();
   }
 
   async findUserTilByUsername(username: string): Promise<UserTil> {
@@ -28,9 +33,9 @@ export class UserTilService {
     return userTil.save();
   }
 
-  async updateTil(username: string, tilId: number, tilData: Partial<Til>): Promise<UserTil> {
+  async updateTil(username: string, tilId: string, tilData: Partial<Til>): Promise<UserTil> {
     const userTil = await this.findUserTilByUsername(username);
-    const tilIndex = userTil.til.findIndex(t => t.id == tilId);
+    const tilIndex = userTil.til.findIndex(t => t._id.toString() == tilId);
     if (tilIndex === -1) {
       throw new NotFoundException('TIL not found');
     }
@@ -56,33 +61,29 @@ export class UserTilService {
     return userTil.save();
   }
 
-  async getConsistentTilUsers(days: number): Promise<string[]> {
-    const startDate = moment().subtract(days, 'days').startOf('day');
+  async getConsistentTilUsers(days: number): Promise<{ consistentUserList: string[] }> {
+    const startDate = moment().subtract(days - 1, 'days').startOf('day');
     const today = moment().endOf('day');
 
     const users = await this.userTilModel.find().exec();
     const consistentUsers: string[] = [];
 
     for (const user of users) {
-      const tils = user.til.filter(til => {
-        const createdAt = moment(til['createdAt']);
-        return createdAt.isBetween(startDate, today, null, '[]');
-      }).sort((a, b) => (a['createdAt'] > b['createdAt'] ? 1 : -1));
+      const tils = user.til
+        .filter(til => {
+          const createdAt = moment(til['createdAt']).startOf('day');
+          return createdAt.isBetween(startDate, today, null, '[]');
+        })
+        .sort((a, b) => (moment(a['createdAt']).startOf('day').isAfter(moment(b['createdAt']).startOf('day')) ? 1 : -1));
 
+      console.log("tils: ", tils);
       if (tils.length >= days) {
         let isConsistent = true;
-        for (let i = 0; i < tils.length - (days - 1); i++) {
-          let consecutive = true;
-          for (let j = 1; j < days; j++) {
-            const day1 = moment(tils[i]['createdAt']).startOf('day');
-            const day2 = moment(tils[i + j]['createdAt']).startOf('day');
-            if (!day1.add(j, 'days').isSame(day2)) {
-              consecutive = false;
-              break;
-            }
-          }
-          if (consecutive) {
-            isConsistent = true;
+        for (let i = 0; i < days; i++) {
+          const checkDate = moment(startDate).add(i, 'days').startOf('day');
+          const existTil = tils.find(til => moment(til['createdAt']).startOf('day').isSame(checkDate));
+          if (!existTil) {
+            isConsistent = false;
             break;
           }
         }
@@ -92,6 +93,6 @@ export class UserTilService {
       }
     }
 
-    return consistentUsers;
+    return { "consistentUserList": consistentUsers };
   }
 }

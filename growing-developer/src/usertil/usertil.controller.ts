@@ -9,10 +9,15 @@ import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class UserTilController {
   constructor(private readonly userTilService: UserTilService) {}
 
-  @Post(':username')
-  @ApiParam({ name: 'username', required: true })
-  async createUserTil(@Param('username') username: string): Promise<UserTil> {
-    return this.userTilService.createUserTil(username);
+  // @Post(':username')
+  // @ApiParam({ name: 'username', required: true })
+  // async createUserTil(@Param('username') username: string): Promise<UserTil> {
+  //   return this.userTilService.createUserTil(username);
+  // }
+
+  @Post()
+  async createUserTil(@Body() userTilData: Partial<UserTil>): Promise<UserTil> {
+    return this.userTilService.createUserTil(userTilData);
   }
 
   @Get(':username')
@@ -35,10 +40,10 @@ export class UserTilController {
   @ApiBody({ type: Til })
   async updateTil(
     @Param('username') username: string,
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() tilData: Partial<Til>,
   ): Promise<UserTil> {
-    return this.userTilService.updateTil(username, id, tilData);
+    return this.userTilService.updateTil(username, id.toString(), tilData);
   }
   
   @Delete(':username/til/:id')

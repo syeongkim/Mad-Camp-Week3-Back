@@ -20,7 +20,7 @@ export class PartyService {
   }
   
 
-  async getConsistentTilOfDays(days: number): Promise<string[]> {
+  async getConsistentTilOfDays(days: number): Promise<{ consistentUserList: string[] }> {
     return this.usertilService.getConsistentTilUsers(days);
   }
 }

@@ -17,8 +17,8 @@ export class PartyController {
     return this.partyService.getCommunicationKingOfWeek();
   }
 
-  @Get('consistenttil:days')
-  async getConsistentTil(@Param('days') days: number): Promise<string[]> {
+  @Get('consistenttil/:days')
+  async getConsistentTil(@Param('days') days: number): Promise<{ consistentUserList: string[] }> {
     return this.partyService.getConsistentTilOfDays(Number(days));
   }
 }
