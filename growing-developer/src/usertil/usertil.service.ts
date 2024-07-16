@@ -64,8 +64,9 @@ export class UserTilService {
   }
 
   async getConsistentTilUsers(days: number): Promise<{ consistentUserList: string[] }> {
-    const startDate = moment().subtract(days - 1, 'days').startOf('day');
+    const startDate = moment().subtract(3, 'days').startOf('day');
     const today = moment().endOf('day');
+    console.log(startDate, today);
 
     const users = await this.userTilModel.find().exec();
     const consistentUsers: string[] = [];

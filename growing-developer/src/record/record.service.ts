@@ -95,14 +95,14 @@ export class RecordService {
     await this.recordModel.findOneAndUpdate({ username }, { wearing_items: currentWearingItems }, { new: true }).exec();
   }
 
-  // async getRecords(): Promise<Record[]> {
-  //   const records = await this.recordModel.find().exec();
-  //   for (const record of records) {
-  //     await this.updateHasCommit(record.username);
-  //     await this.updateWearingItems(record.username);
-  //   }
-  //   return this.recordModel.find().exec(); // 업데이트 후 다시 조회
-  // }
+  async getRecords(): Promise<Record[]> {
+    const records = await this.recordModel.find().exec();
+    // for (const record of records) {
+    //   await this.updateHasCommit(record.username);
+    //   await this.updateWearingItems(record.username);
+    // }
+    return this.recordModel.find().exec(); // 업데이트 후 다시 조회
+  }
 
   async getRecordByUsername(username: string): Promise<Record> {
     await this.updateWearingItems(username);

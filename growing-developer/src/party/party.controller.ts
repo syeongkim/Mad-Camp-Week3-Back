@@ -19,6 +19,6 @@ export class PartyController {
 
   @Get('consistenttil')
   async getConsistentTil(): Promise<{ consistentUserList: string[] }> {
-    return this.partyService.getConsistentTilOfDays(Number(3));
+    return this.partyService.getConsistentTilOfDays(3);
   }
 }
