@@ -11,6 +11,7 @@ import { RecordModule } from './record/record.module';
 import { UserItemModule } from './useritem/useritem.module';
 import { UserTilModule } from './usertil/usertil.module';
 import { PostModule } from './post/post.module';
+import { PartyModule } from './party/party.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PostModule } from './post/post.module';
     UserTilModule,
     HttpModule,
     PostModule,
+    PartyModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService],

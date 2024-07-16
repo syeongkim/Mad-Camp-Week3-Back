@@ -42,7 +42,10 @@ export class RecordService {
     const accessToken = user?.access_token;
 
     const today = moment().startOf('day');
+    const startOfLastMonth = moment().subtract(1, 'month').startOf('month');
+    const endOfLastMonth = moment().subtract(1, 'month').endOf('month');
     let hasCommitToday = false;
+    let commitCount = 0;
 
     try {
       const repos: AxiosResponse = await lastValueFrom(
@@ -71,6 +74,9 @@ export class RecordService {
             hasCommitToday = true;
             break;
           }
+          if (commitDate.isBetween(startOfLastMonth, endOfLastMonth, null, '[]')) {
+            commitCount++;
+          }
         }
         if (hasCommitToday) {
           break;
@@ -81,7 +87,7 @@ export class RecordService {
     }
     
 
-    await this.recordModel.findOneAndUpdate({ username }, { hasCommit: hasCommitToday }, { new: true }).exec();
+    await this.recordModel.findOneAndUpdate({ username }, { hasCommit: hasCommitToday, commitCount: commitCount }, { new: true }).exec();
   }
 
   async updateWearingItems(username: string): Promise<void> {
@@ -109,5 +115,14 @@ export class RecordService {
 
   async deleteRecord(username: string): Promise<Record> {
     return this.recordModel.findOneAndDelete({ username }).exec();
+  }
+
+  async getTopCommitterOfMonth(): Promise<string> {
+    const topCommitter = await this.recordModel
+      .findOne()
+      .sort({ commitCount: -1 })
+      .exec();
+
+    return topCommitter ? topCommitter.username : null;
   }
 }

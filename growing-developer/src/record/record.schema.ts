@@ -16,6 +16,10 @@ export class Record extends Document {
   @Prop({ default: false })
   hasCommit: boolean;
 
+  @ApiProperty({ description: '이번 달 커밋 횟수', example: 24 })
+  @Prop({ default: 0 })
+  commitCount: number;
+
   @ApiProperty({ description: '현재 착용하고 있는 아이템들', example: ["coffee", "hoodie"] })
   @Prop({ type: [String], default: [] })
   wearing_items: string[];

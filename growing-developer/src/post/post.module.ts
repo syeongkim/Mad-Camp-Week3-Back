@@ -10,5 +10,6 @@ import { Post, PostSchema } from './post.schema';
   ],
   providers: [PostService],
   controllers: [PostController],
+  exports: [PostService],
 })
 export class PostModule {}
