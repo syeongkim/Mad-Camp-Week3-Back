@@ -31,6 +31,18 @@ export class RecordController {
     return this.recordService.updateRecord(username, updateData);
   }
 
+  @Put('increment-coin')
+  @ApiBody({ schema: { properties: { username: { type: 'string' }, amount: { type: 'number' } } } })
+  async incrementCoin(@Body() body: { username: string; amount: number }): Promise<Record> {
+    return this.recordService.incrementCoin(body.username, body.amount);
+  }
+
+  @Put('decrement-coin')
+  @ApiBody({ schema: { properties: { username: { type: 'string' }, amount: { type: 'number' } } } })
+  async decrementCoin(@Body() body: { username: string; amount: number }): Promise<Record> {
+    return this.recordService.decrementCoin(body.username, body.amount);
+  }
+
   @Delete(':username')
   async deleteRecord(@Param('username') username: string): Promise<Record> {
     return this.recordService.deleteRecord(username);

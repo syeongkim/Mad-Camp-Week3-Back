@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import * as ghrepos from 'ghrepos';
-import { Injectable, Header } from '@nestjs/common';
+import { Injectable, Header, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ConfigService } from '@nestjs/config';
@@ -111,6 +111,28 @@ export class RecordService {
 
   async updateRecord(username: string, updateData: Partial<Record>): Promise<Record> {
     return this.recordModel.findOneAndUpdate({ username }, updateData, { new: true }).exec();
+  }
+
+  async incrementCoin(username: string, amount: number): Promise<Record> {
+    const record = await this.recordModel.findOne({ username }).exec();
+    if (!record) {
+      throw new NotFoundException('User record not found');
+    }
+    record.coin += amount;
+    record.save();
+    console.log(record);
+    return record;
+  }
+
+  async decrementCoin(username: string, amount: number): Promise<Record> {
+    const record = await this.recordModel.findOne({ username }).exec();
+    if (!record) {
+      throw new NotFoundException('User record not found');
+    }
+    record.coin -= amount;
+    record.save();
+    console.log(record);
+    return record;
   }
 
   async deleteRecord(username: string): Promise<Record> {
