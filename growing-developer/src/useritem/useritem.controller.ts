@@ -54,8 +54,8 @@ export class UserItemController {
   }
 
 
-  // @Get()
-  // async getAllUserItems(): Promise<UserItem[]> {
-  //   return this.userItemService.getAllUserItems();
-  // }
+  @Get()
+  async getAllUserItems(): Promise<UserItem[]> {
+    return this.userItemService.getAllUserItems();
+  }
 }
