@@ -13,12 +13,14 @@ import { UserTilModule } from './usertil/usertil.module';
 import { PostModule } from './post/post.module';
 import { PartyModule } from './party/party.module';
 
+const server = process.env.SERVER
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // 전역 모듈로 설정하여 모든 모듈에서 사용할 수 있게 합니다.
     }),
-    MongooseModule.forRoot("mongodb://localhost:27017/growingDeveloper"),
+    MongooseModule.forRoot(`mongodb://${server}:27017/growingDeveloper`),
     AuthModule,
     UserModule,
     RecordModule,

@@ -13,6 +13,7 @@ import { HttpService } from '@nestjs/axios';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../user/user.schema';
 
+const server = process.env.SERVER;
 
 @Injectable()
 export class RecordService {
@@ -35,7 +36,7 @@ export class RecordService {
     return newRecord.save();
   }
 
-  @Header('Access-Control-Allow-Origin', 'http://localhost:3001')
+  @Header('Access-Control-Allow-Origin', `http://${server}:3001`)
   @Header('Access-Control-Allow-Credentials', 'true')
   async updateHasCommit(username: string): Promise<void> {
     const user = await this.userModel.findOne({ username }).exec();

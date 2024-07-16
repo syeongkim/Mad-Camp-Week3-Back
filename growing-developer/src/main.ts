@@ -4,8 +4,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const server = process.env.SERVER;
   app.enableCors({
-    origin: 'http://localhost:3000', // 프론트엔드 URL
+    origin: `http://${server}:3000`, // 프론트엔드 URL
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
@@ -22,6 +23,6 @@ async function bootstrap() {
   // Swagger UI에 대한 path를 연결함
   // .setup('swagger ui endpoint', app, swagger_document)
   SwaggerModule.setup('api', app, document);
-  await app.listen(3001);
+  await app.listen(80);
 }
 bootstrap();
