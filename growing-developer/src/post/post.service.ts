@@ -15,11 +15,11 @@ export class PostService {
   }
 
   async findReceivedPosts(username: string): Promise<Post[]> {
-    return this.postModel.find({ receiver: username }).exec();
+    return (await this.postModel.find({ receiver: username }).exec()).sort((a, b) => b['createdAt'].getTime() - a['createdAt'].getTime());
   }
 
   async findSentPosts(username: string): Promise<Post[]> {
-    return this.postModel.find({ sender: username }).exec();
+    return (await this.postModel.find({ sender: username }).exec()).sort((a, b) => b['createdAt'].getTime() - a['createdAt'].getTime());
   }
 
   async getTopSenderOfWeek(): Promise<{ username: string, count: number } | null> {
