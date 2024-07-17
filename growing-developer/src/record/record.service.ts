@@ -36,7 +36,7 @@ export class RecordService {
     return newRecord.save();
   }
 
-  @Header('Access-Control-Allow-Origin', `http://${server}:3001`)
+  @Header('Access-Control-Allow-Origin', `http://localhost:80`)
   @Header('Access-Control-Allow-Credentials', 'true')
   async updateHasCommit(username: string): Promise<void> {
     const user = await this.userModel.findOne({ username }).exec();
