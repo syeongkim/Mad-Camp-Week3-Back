@@ -7,16 +7,16 @@ GitHub API를 이용해 나의 커밋 기록을 불러오고 이를 기반으로
 
 
 # 개발 환경
-## FrontEnd: React
-## BackEnd: Nest.js 
-## DB: MongoDB
-## Cloud: Kcloud
+- FrontEnd: React
+- BackEnd: Nest.js 
+- DB: MongoDB
+- Cloud: Kcloud
 
 
 # 팀원
 - 김서영
 - 김예락
-- 
+
 # 💻 기능
 ## 1️⃣ 깃허브 소셜 로그인
 
