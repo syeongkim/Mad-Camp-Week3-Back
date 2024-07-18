@@ -69,7 +69,8 @@ CitHub가 비밀스럽고 안전하게(?) 전달해드립니다.
 <br>
 
 ### 다른 사용자에게 쪽지 보내기
-<img src="https://i.ibb.co/x1Hby9D/image.gif"><br>
+<img src="https://github.com/user-attachments/assets/5ae3c982-f18c-4763-beae-3299e89ba146">
+<br>
 매일매일 컴퓨터랑만 대화하는건 지겨워.. 파티장에서는 서비스를 이용하는 모든 사용자들을 만날 수 있습니다! 
 
 다른 사용자들의 오늘 하루 메세지를 확인하고, 친해지고 싶은 개발자들에게 쪽지를 보내보아요~
@@ -77,7 +78,9 @@ CitHub가 비밀스럽고 안전하게(?) 전달해드립니다.
 
 
 ### 미니게임
-<img src="https://i.ibb.co/wNyhqNz/image.gif"><br>
+https://github.com/user-attachments/assets/a68d78c9-0a4b-4cb2-8429-0262ea67991b
+
+
 개발을 너무 열심히 해서 머리가 지끈지끈할 때, 잠깐 휴식을 취해보아요! 
 
 30초 동안 열심히 클로바를 주워 코인으로 교환하세요 오늘도 러키비키한 하루! 🍀​
