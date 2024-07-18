@@ -6,6 +6,7 @@ CitHub는 개발자들을 위한  아바타 기반의 관계망 확장, 셀프 �
 GitHub API를 이용해 나의 커밋 기록을 불러오고 이를 기반으로 다양한 이벤트가 일어납니다.
 
 
+
 # 개발 환경
 - FrontEnd: React
 - BackEnd: Nest.js 
@@ -13,29 +14,31 @@ GitHub API를 이용해 나의 커밋 기록을 불러오고 이를 기반으로
 - Cloud: Kcloud
 
 
+
 # 팀원
 - 김서영
 - 김예락
 
 
+
 # 💻 기능
 ## 1️⃣ 깃허브 소셜 로그인
-https://github.com/user-attachments/assets/efeb6341-8d7f-4c68-8a9e-27c0229ac4e9
+<img src="https://github.com/user-attachments/assets/efeb6341-8d7f-4c68-8a9e-27c0229ac4e9">
 사용자의 기존 깃허브 계정으로 로그인할 수 있습니다.
 그동안의 커밋 기록이 반영됩니다.
 
 
 ## 2️⃣ 나의 방 꾸미기
-https://github.com/user-attachments/assets/2b4cc629-68d8-41c9-b916-68d6b34bc300
+<img src="https://github.com/user-attachments/assets/2b4cc629-68d8-41c9-b916-68d6b34bc300">
 GitHub api로 불러온 내 커밋 잔디를 보여줍니다. 각각의 오브젝트는 버튼으로 동작합니다.
 
 커밋 기록이 있는 날은 해가 떠있습니다.
 
 
 ### 아이템 구매
-https://github.com/user-attachments/assets/a279c87b-f814-4ab4-9ff4-0eac255ca363
+<img src="https://github.com/user-attachments/assets/a279c87b-f814-4ab4-9ff4-0eac255ca363">
 상점에서 개발자의 삶의 질 향상을 위한 여러 아이템들(노트북, 블루라이트 차단 안경, 헤드셋 등)을 코인을 이용하여 구매할 수 있습니다.
-https://github.com/user-attachments/assets/de916f8d-78b3-44fa-a000-a0cc1ae54047
+<img src="https://github.com/user-attachments/assets/de916f8d-78b3-44fa-a000-a0cc1ae54047">
 구매한 아이템은 내 아이템에서 자유롭게 착용 및 해제할 수 있고, 착용한 아이템은 방 안에서 자유롭게 사용할 수 있습니다.
 
 ### 프로필 - 상태메시지 설정
